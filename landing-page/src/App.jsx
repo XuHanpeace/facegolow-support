@@ -14,9 +14,11 @@ function App() {
         <div className="container">
           <div className="hero-content">
             <div className="logo-container">
-              <div className="logo-placeholder">
-                <span className="logo-text">FG</span>
-              </div>
+              <img 
+                src="/brand-icon.png" 
+                alt="FaceGlow Logo" 
+                className="logo-image"
+              />
             </div>
             <h1 className="hero-title">FaceGlow</h1>
             <p className="hero-subtitle">专业的 AI 照片处理应用</p>
