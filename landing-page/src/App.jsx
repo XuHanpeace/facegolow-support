@@ -60,11 +60,11 @@ function App() {
             <div className="logo-container">
               <img 
                 src="/brand-icon.png" 
-                alt="FaceGlow Logo" 
+                alt="美颜换换 Logo" 
                 className="logo-image"
               />
             </div>
-            <h1 className="hero-title">FaceGlow</h1>
+            <h1 className="hero-title">美颜换换</h1>
             <p className="hero-subtitle">专业的 AI 照片处理应用</p>
             <p className="hero-description">
               通过先进的 AI 技术，帮助您轻松创作出精美的照片作品，记录生活中的美好瞬间
@@ -177,7 +177,7 @@ function App() {
       {/* CTA Section */}
       <section className="cta">
         <div className="container">
-          <h2 className="cta-title">立即体验 FaceGlow</h2>
+          <h2 className="cta-title">立即体验 美颜换换</h2>
           <p className="cta-description">
             下载应用，开启您的 AI 照片处理之旅
           </p>
@@ -193,7 +193,7 @@ function App() {
       {/* Footer */}
       <footer className="footer">
         <div className="container">
-          <p className="footer-text">© 2025 FaceGlow. All rights reserved.</p>
+          <p className="footer-text">© 2025 美颜换换. All rights reserved.</p>
           <p className="footer-text">备案号：沪ICP备2025152989号-1A</p>
         </div>
       </footer>
