@@ -1,10 +1,54 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
+const CLOUD_FUNCTION_BASE_URL = 'https://startup-2gn33jt0ca955730-1257391807.ap-shanghai.app.tcloudbase.com';
+
 function App() {
+  const [albums, setAlbums] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchAlbums();
+  }, []);
+
+  const fetchAlbums = async () => {
+    try {
+      const response = await fetch(`${CLOUD_FUNCTION_BASE_URL}/getAlbumList`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          page: 1,
+          page_size: 6,
+          sort_by: 'default',
+        }),
+      });
+      const data = await response.json();
+      if (data.code === 200 && data.data?.albums) {
+        setAlbums(data.data.albums);
+      }
+    } catch (error) {
+      console.error('Failed to fetch albums:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleAppStoreClick = () => {
     // App Store 链接，需要替换为实际的链接
     window.open('https://apps.apple.com/app/faceglow', '_blank');
+  };
+
+  const getActivityTagClass = (tagType) => {
+    const tagMap = {
+      'new': 'tag-new',
+      'discount': 'tag-discount',
+      'free': 'tag-free',
+      'member': 'tag-member',
+      'premium': 'tag-premium',
+    };
+    return tagMap[tagType] || '';
   };
 
   return (
@@ -34,6 +78,50 @@ function App() {
           </div>
         </div>
       </section>
+
+      {/* Albums Showcase Section */}
+      {albums.length > 0 && (
+        <section className="albums-showcase">
+          <div className="container">
+            <h2 className="section-title">热门相册</h2>
+            <p className="section-subtitle">探索丰富的相册模板，创作属于您的独特作品</p>
+            <div className="albums-grid">
+              {albums.map((album) => (
+                <div key={album.album_id} className="album-card">
+                  <div className="album-image-wrapper">
+                    <img 
+                      src={album.album_image} 
+                      alt={album.album_name}
+                      className="album-image"
+                      loading="lazy"
+                    />
+                    {album.activity_tag_type && (
+                      <span className={`activity-tag ${getActivityTagClass(album.activity_tag_type)}`}>
+                        {album.activity_tag_text || ''}
+                      </span>
+                    )}
+                    {album.likes > 0 && (
+                      <div className="album-likes">
+                        <span className="likes-icon">❤️</span>
+                        <span className="likes-count">{album.likes}</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="album-info">
+                    <h3 className="album-name">{album.album_name}</h3>
+                    <p className="album-description">{album.album_description}</p>
+                    <div className="album-tags">
+                      {album.theme_styles?.slice(0, 2).map((style, index) => (
+                        <span key={index} className="theme-tag">{style}</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Features Section */}
       <section className="features">
